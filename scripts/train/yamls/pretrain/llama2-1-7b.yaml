@@ -3,6 +3,7 @@ data_remote: s3://mcli-sukrit/data/c4-small-seq-1024
 context_length: 1024
 tokenizer_name: meta-llama/Llama-2-7b-hf
 global_seed: 42
+max_seq_len: ${context_length}
 
 # Run Name
 run_name: # If left blank, will be read from env var $RUN_NAME
