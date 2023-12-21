@@ -1,3 +1,6 @@
+# Time variables only accept integer values:
+# for example, 0.1ep is not allowed, but 1ep is allowed
+
 data_local: ./my-copy-c4
 data_remote: s3://mcli-sukrit/data/c4-small-seq-1024
 context_length: 1024
@@ -66,7 +69,7 @@ eval_loader:
 # Optimization
 scheduler:
   name: cosine_with_warmup
-  t_warmup: 0.1ep
+  t_warmup: 10ba
   alpha_f: 0.1
 
 optimizer:
@@ -120,7 +123,7 @@ loggers:
   wandb: {}
 
 # Checkpoint to local filesystem or remote object store
-save_interval: 0.05ep
+save_interval: 50ba
 save_num_checkpoints_to_keep: 10  # Important, this cleans up checkpoints saved to DISK
 save_folder: s3://mcli-sukrit/runs/models/{run_name}/checkpoints
 

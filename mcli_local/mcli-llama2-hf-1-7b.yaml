@@ -36,7 +36,7 @@ command: >-
     composer train/train.py train/yamls/pretrain/llama2-1-7b.yaml \
       train_loader.dataset.split=train_small \
       eval_loader.dataset.split=val_small \
-      max_duration=1ep \
+      max_duration=100ba \
       eval_interval=10ba
 
 parameter: {}
