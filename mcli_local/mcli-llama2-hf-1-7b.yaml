@@ -1,20 +1,20 @@
 # Variables like path and stuff
-dataset: c4
-context_length: 1024
-out_dir_local: ./my-copy-${dataset}
-out_dir_remote: s3://mcli-sukrit/data/${dataset}-small-seq-${context_length}
-tokenizer_name: meta-llama/Llama-2-7b-hf
-eos_text: '' # no eos token for llama tokenizer
-train_split: train_small
-val_split: val_small
-train_yaml_path: train/yamls/pretrain/llama2-1-7b.yaml
+# dataset: c4
+# context_length: 1024
+# out_dir_local: ./my-copy-${dataset}
+# out_dir_remote: s3://mcli-sukrit/data/${dataset}-small-seq-${context_length}
+# tokenizer_name: meta-llama/Llama-2-7b-hf
+# eos_text: '' # no eos token for llama tokenizer
+# train_split: train_small
+# val_split: val_small
+# train_yaml_path: train/yamls/pretrain/llama2-1-7b.yaml
 
 
 compute:
   cluster: r4z8 # 80GB A100s (upto 120)
   gpus: 8 # multiple of 8
 
-name: mcli-llama2-hf-1-7b-redpyjam-1b
+name: mcli-llama2-hf-1-7b-redpyjama-1b
 image: mosaicml/llm-foundry:2.1.0_cu121_flash2_aws-latest
 
 integrations:
@@ -22,16 +22,21 @@ integrations:
   git_repo: chats-bug/llm-foundry
   git_branch: main
   pip_install: -e .[gpu]
-command: >-
+command: >-  
   cd llm-foundry/scripts
-  python data_prep/data_prep/convert_dataset_hf.py \
-    --dataset ${dataset} --data_subset en \
-    --out_root ${out_dir_local} --splits ${train_split} ${val_split} \
-    --concat_tokens ${context_length} --tokenizer ${tokenizer_name}
-  composer train/train.py ${train_yaml_path} \
-    train_loader.dataset.split=${train_split} \
-    eval_loader.dataset.split=${val_split} \
-    max_duration=1ep \
-    eval_interval=10ba
+  
+    python data_prep/convert_dataset_hf.py \
+      --dataset c4 \
+      --data_subset en \
+      --out_root s3://mcli-sukrit/data/c4-small-seq-1024 \
+      --splits train_small val_small \
+      --concat_tokens 1024 \
+      --tokenizer meta-llama/Llama-2-7b-hf
+    
+    composer train/train.py train/yamls/pretrain/llama2-1-7b.yaml \
+      train_loader.dataset.split=train_small \
+      eval_loader.dataset.split=val_small \
+      max_duration=1ep \
+      eval_interval=10ba
 
 parameter: {}
