@@ -1,10 +1,10 @@
 # Variables like path and stuff
 dataset: c4
+context_length: 1024
 out_dir_local: ./my-copy-${dataset}
-out_dir_remote: # If blank, files must be present in out_dir_local
+out_dir_remote: s3://mcli-sukrit/data/${dataset}-small-seq-${context_length}
 tokenizer_name: meta-llama/Llama-2-7b-hf
 eos_text: '' # no eos token for llama tokenizer
-context_length: 1024
 train_split: train_small
 val_split: val_small
 train_yaml_path: train/yamls/pretrain/llama2-1-7b.yaml

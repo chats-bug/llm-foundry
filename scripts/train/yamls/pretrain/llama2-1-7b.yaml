@@ -1,5 +1,5 @@
 data_local: ./my-copy-c4
-data_remote: s3://agi-model/redpajama_v2_local_mds_shards/
+data_remote: s3://mcli-sukrit/data/${dataset}-small-seq-${context_length}/
 tokenizer_name: meta-llama/Llama-2-7b-hf
 context_length: 1024
 global_seed: 42
