@@ -12,7 +12,7 @@
 
 compute:
   cluster: r4z8 # 80GB A100s (upto 120)
-  gpus: 8 # multiple of 8
+  gpus: 64 # multiple of 8
 
 name: mcli-llama2-hf-1-7b-redpyjama-1b-2048
 image: mosaicml/llm-foundry:2.1.0_cu121_flash2_aws-latest
